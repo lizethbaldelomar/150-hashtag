@@ -113,9 +113,11 @@ def lookup(ch):
         break
     return nextToken
 
+def getNoneBlank():
+    while (nextChar==' ' or nextChar=='\v' or nextChar=='\t' or nextChar=='\f' or nextChar=='\r'):
+        getChar()
 
-
-def lexa():
+def lex():
     lexLen = 0
     getNoneBlank()
     while switch(charClass):
@@ -153,19 +155,13 @@ def lexa():
         a = nextToken
     if (c==0):
         print "Next token is: %(a), Next lexeme is %(lexeme)\n"
-    return nextToken;
-
-def getNoneBlank():
-    while (nextChar==' ' or nextChar=='\v' or nextChar=='\t' or nextChar=='\f' or nextChar=='\r'):
-        getChar()
-
-
+    return nextToken
 
     
 f = open("a.txt", 'r')
 getChar()
 while (nextToken!=EOF):
-    lexa()
+    lex()
 
 
 

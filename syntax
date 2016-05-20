@@ -1,0 +1,31 @@
+Programs
+<program> -> <form>*
+<form> -> <definition> | <expression>
+
+Definitions
+<definition> -> <variable definition>
+<variable> -> <identifier>
+<keyword> -> <identifier>
+<variable definition> -> counterpart defining fxns, variables
+
+Expressions
+<expression> -> <constant>
+                <variable>
+                counterpart ng if
+<constant> -> <number>
+
+Identifiers
+<identifier> -> <initial><subsequent>*| + | - | ...
+<initial> -> <letter> | ! | #
+<subsequent> -> <letter> | <digit>
+<letter> -> a | b | ... | z | A | B | ... | Z
+<digit> -> 0 | 1 | ... | 9
+
+Data
+<datum> -> <int> | <float>
+<int> -> 0 | 1 | ... | 9
+<float> -> <int>.<int>
+
+Numbers
+<sign> -> <empty> | + | -
+<digit 10> -> <digit>
