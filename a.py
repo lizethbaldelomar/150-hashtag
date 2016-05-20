@@ -121,7 +121,7 @@ def lex():
     lexLen = 0
     getNoneBlank()
     while switch(charClass):
-        if case("LETTER"):
+        if case(LETTER):
             addChar()
             getChar()
             while (charClass == LETTER or charClass == DIGIT):
@@ -129,7 +129,7 @@ def lex():
                 getChar()
             nextToken = IDENT
             break
-        if case("DIGIT"):
+        if case(DIGIT):
             addChar()
             getChar()
             while (charClass == DIGIT):
@@ -137,17 +137,18 @@ def lex():
                 getChar()
             nextToken = INT_LIT
             break
-        if case("UNKNOWN"):
+        if case(UNKNOWN):
             lookup(nextChar)
             getChar()
             break
-        if case("EOF"):
+        if case(EOF):
             nextToken = EOF
             lexeme[0] = 'E'
             lexeme[1] = 'O'
             lexeme[2] = 'L'
             lexeme[3] = 0
             break
+        print nextToken
         break
     if (nextToken==EOL):
         a = -1
