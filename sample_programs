@@ -1,0 +1,44 @@
+Sample Programs - Provide 3 sample programs that tests the capability of the implemented compiler/interpreter.
+1) The first sample program should be a program that outputs all leap years within a range of years inputted by the user.
+2) The second sample program will be your preference but make sure it can show the capability of your programming language.
+3) The third sample program will be a program to test your debugger. Pepper your test files with comments.
+
+C code:
+#include<stdio.h>
+int main(){
+int year;
+int min_year,max_year;
+
+printf("Enter the lowest year: ");
+scanf("%d",&min_year);
+
+printf("Enter the heighest year: ");
+scanf("%d",&max_year);
+
+printf("Leap years in given range are: ");
+for(year = min_year;year <= max_year; year++){
+if(((year%4==0)&&(year%100!=0))||(year%400==0))
+printf("%d ",year);
+}
+
+return 0;
+}
+
+
+HashCode:
+@int year
+@int min_year
+@int max_year
+
+#print "Enter the lowest year: "
+#read min_year
+
+#print "Enter the highest year: "
+#read max_year
+
+#print "Leap years in given range are: "
+
+#for (year = min_year; year <= max_year; year++)
+#if (((year%4 == 0) and (year%100 != 0)) or (year % 400 == 0))
+#print "#{year}"
+#end
