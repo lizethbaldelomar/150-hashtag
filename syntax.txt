@@ -1,0 +1,78 @@
+Programs
+<program> -> <form>*
+<form> -> <definition> | <expression>
+
+Definitions
+<definition> -> <variable definition>
+<variable> -> <identifier>
+<keyword> -> <identifier>
+<variable definition> -> counterpart defining fxns, variables
+
+Expressions
+<expression> -> <constant>
+                <variable>
+                counterpart ng if
+<constant> -> <number>
+
+Identifiers
+<identifier> -> <initial><subsequent>*| + | - | ...
+<initial> -> <letter> | ! | #
+<subsequent> -> <letter> | <digit>
+<letter> -> a | b | ... | z | A | B | ... | Z
+<digit> -> 0 | 1 | ... | 9
+
+Data
+<datum> -> <int> | <float>
+<int> -> 0 | 1 | ... | 9
+<float> -> <int>.<int>
+
+Numbers
+<sign> -> <empty> | + | -
+<digit 10> -> <digit>
+
+—
+
+( sorry pero di ko kasi magets yung grammar sa taas lol )
+( comment ba yung ‘!’ ???? :( )
+
+Identifiers
+<id> -> <var> | <constant>
+<var> -> <var><alphanum> | <letter>
+<alphanum> -> <letter> | <digit>
+<letter> -> A | B | … | Z | a | b | … | z
+<digit> -> 0 | 1 | 2 | … | 9
+<constant> -> <sign><number>
+<number> -> <number><digit> | <digit>
+<sign> -> epsilon | + | -
+
+Declaration
+<declare> -> <type><var><init>
+<type> -> @int | @float | @char | ...
+<init> -> epsilon | =<expr>
+
+Functions
+<function> -> <print> | <while>#end | <read> | <for>#end | <if>#end | ... | <assign>
+<print> -> #print "<strexpr>" #end
+<strexpr> -> #{<var>} | <var>
+
+<while> -> #while (<cond>) <block>
+
+<if> -> #if (<cond>) <block> <elif> <else>
+<elif> -> #elif (<cond>) <block> <elif> | epsilon
+<else> -> #else <block> | epsilon
+
+<for> -> #for (<var>=<id>; <cond>; <var><iter>) <block>
+<iter> -> ++ | --
+
+<cond> -> <var> <rel> <id> | <bool>
+<rel> -> == | != | > | ...
+<bool> -> true | false
+
+<assign> -> <var> = <expr>
+<expr> -> <expr> <oper1> <term> | <term>
+<oper1> -> + | -
+<term> -> <term> <oper2> <factor> | <factor>
+<oper2> -> * | / | %
+<factor> -> (<expr>) | <id>
+
+<block> -> <function><block> | <function>
