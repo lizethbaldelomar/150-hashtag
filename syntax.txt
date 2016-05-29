@@ -46,16 +46,24 @@ Identifiers
 <sign> -> epsilon | + | -
 
 Declaration
-<declare> -> <type><var><init>
+<declare> -> <type> <var> <init>
 <type> -> @int | @float | @char | ...
 <init> -> epsilon | =<expr>
 
 Functions
-<function> -> <print> | <while>#end | <read> | <for>#end | <if>#end | ... | <assign>
+<function> -> <print> | *<while>#end | <read> | <for>#end | <if>#end | ... | <assign> | <call>#end | ?<comment>?
 <print> -> #print "<strexpr>" #end
-<strexpr> -> #{<var>} | <var>
+<strexpr> -> #{<var>} | <comment>
+<call> -> #<var>(<param>)
+<comment> -> <var>_<comment> | epsilon
 
-<while> -> #while (<cond>) <block>
+Separate Function
+<func> -> #function <var> ( <param> ) <block> #end
+<param> -> <param1> | epsilon
+<param1> -> <param1>,<id>|<id>
+*<ret> -> #return <id> | epsilon
+
+*<while> -> #while (<cond>) <block>
 
 <if> -> #if (<cond>) <block> <elif> <else>
 <elif> -> #elif (<cond>) <block> <elif> | epsilon
@@ -65,7 +73,7 @@ Functions
 <iter> -> ++ | --
 
 <cond> -> <var> <rel> <id> | <bool>
-<rel> -> == | != | > | ...
+<rel> -> == | != | > | < | >= | <=
 <bool> -> true | false
 
 <assign> -> <var> = <expr>
@@ -75,4 +83,4 @@ Functions
 <oper2> -> * | / | %
 <factor> -> (<expr>) | <id>
 
-<block> -> <function><block> | <function>
+<block> -> <function>'\n'<block> | <function>'\n'
