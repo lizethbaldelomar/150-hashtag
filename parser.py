@@ -88,6 +88,8 @@ def getChar():
             charClass = DIGIT
         elif (nextChar == "#"):
         	charClass = HASH
+        elif (nextChar == "@"):
+            charClass = DEC
         else:
             charClass = UNKNOWN
 
@@ -366,6 +368,21 @@ def lex():
                 getChar()
             s = "#startprogram"
             d = "#endprogram"
+            lexeme = ''.join(lexeme)
+            if (lexeme == s):
+                nextToken = START_PROG
+            elif(lexeme == d):
+                nextToken = END_PROG
+            break
+
+        if case(AT):
+            addChar()
+            getChar()
+            while (charClass == LETTER):
+                addChar()
+                getChar()
+            s = "@int"
+            d = "@float"
             lexeme = ''.join(lexeme)
             if (lexeme == s):
                 nextToken = START_PROG
