@@ -37,6 +37,8 @@ Identifiers
 <print> -> #print "<strexpr>" #end
 <strexpr> -> #{<id>} | <comment>
 
+<read> -> #read <var> #end
+
 <comment> -> <var>_<comment> | epsilon
 
 <call> -> #call <var>(<param>) #end
@@ -50,3 +52,5 @@ Identifiers
 
 <cond> -> <var> <rel> <id>
 <rel> -> == | != | > | < | >= | <=
+
+<cond> -> <var> <rel> <id> | <cond> and <var> <rel> <id> | <cond> or <var> <rel> <id>

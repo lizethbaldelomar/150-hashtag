@@ -1,12 +1,12 @@
 #switch
 class switch(object):
-    value = None
-    def __new__(class_, value):
-        class_.value = value
-        return True
+	value = None
+	def __new__(class_, value):
+		class_.value = value
+		return True
 
 def case(*args):
-    return any((arg == switch.value for arg in args))
+	return any((arg == switch.value for arg in args))
 
 nextChar = 'a'
 nextToken = 0
@@ -61,535 +61,560 @@ SEP_FUNC = 52
 COMMA = 53
 QUOTE = 54
 COLON = 55
-HASH = 2000
+HASH = 56
+DEC = 57
+BRACKET = 58
+SPECIAL = 59
+ADD = 60
+GREAT = 61
+EQ = 62
+MINUS = 63
+EX = 64
+LESS = 65
 #global
 
 def getChar():
-        global charClass
-        global nextChar
-        global nextToken
-        global lexLen
-        global token
-        global a
-        global b
-        global c
-        #print "pasok getChar"
-        nextChar = f.read(1)
-        #print nextChar
-        if not nextChar:
-            #print "hello"
-            charClass = EOF
-            #nextToken = EOF
-            lexeme = []
-            lexeme.append("EOF")
-        if (nextChar.isalpha()):
-            charClass = LETTER
-        elif (nextChar.isdigit()):
-            charClass = DIGIT
-        elif (nextChar == "#"):
-        	charClass = HASH
-        elif (nextChar == "@"):
-            charClass = DEC
-        else:
-            charClass = UNKNOWN
+		global charClass
+		global nextChar
+		global nextToken
+		global lexLen
+		global token
+		global a
+		global b
+		global c
+		#print "pasok getChar"
+		nextChar = f.read(1)
+		#print nextChar
+		if not nextChar:
+			#print "hello"
+			charClass = EOF
+			#nextToken = EOF
+			lexeme = []
+			lexeme.append("EOF")
+		if (nextChar.isalpha()):
+			charClass = LETTER
+		elif (nextChar.isdigit()):
+			charClass = DIGIT
+		elif (nextChar == "#"):
+			charClass = HASH
+		elif (nextChar == "@"):
+			charClass = DEC
+		elif (nextChar == "{"):
+			charClass = BRACKET
+		elif (nextChar == ">"):
+			charClass = GREAT
+		elif (nextChar == "<"):
+			charClass = LESS
+		elif (nextChar == "="):
+			charClass = EQ
+		elif (nextChar == "+"):
+			charClass = ADD
+		elif (nextChar == "-"):
+			charClass = MINUS
+		elif (nextChar == "!"):
+			charClass = EX
+		else:
+			charClass = UNKNOWN
 
 def addChar():
-    global charClass
-    global nextChar
-    global nextToken
-    global lexLen
-    global token
-    global a
-    global b
-    global c
-    global lexeme
-    #print "pasok addChar"
-    lexeme.append(nextChar)
-    #print lexeme
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	global lexeme
+	#print "pasok addChar"
+	lexeme.append(nextChar)
+	#print lexeme
 
 def lookup(ch):
-    global charClass
-    global nextChar
-    global nextToken
-    global lexLen
-    global token
-    global a
-    global b
-    global c
-    #print "lookup"
-    while switch(ch):
-        if case('('):
-            addChar()
-            nextToken = LEFT_PAREN
-            break
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	#print "lookup"
+	while switch(ch):
+		if case('('):
+			addChar()
+			nextToken = LEFT_PAREN
+			break
 
-        if case(')'):
-            addChar()
-            nextToken = RIGHT_PAREN
-            break
+		if case(')'):
+			addChar()
+			nextToken = RIGHT_PAREN
+			break
 
-        if case('+'):
-            addChar()
-            nextToken = ADD_OP
-            break
+		if case('+'):
+			addChar()
+			nextToken = ADD_OP
+			break
 
-        if case('-'):
-            addChar()
-            nextToken = SUB_OP
-            break
+		if case('-'):
+			addChar()
+			nextToken = SUB_OP
+			break
 
-        if case('*'):
-            addChar()
-            nextToken = MULT_OP
-            break
+		if case('*'):
+			addChar()
+			nextToken = MULT_OP
+			break
 
-        if case('/'):
-            addChar()
-            nextToken = DIV_OP
-            break
+		if case('/'):
+			addChar()
+			nextToken = DIV_OP
+			break
 
-        if case('%'):
-            addChar()
-            nextToken = MOD
-            break
+		if case('%'):
+			addChar()
+			nextToken = MOD
+			break
 
-        if case('='):
-            addChar()
-            nextToken = ASSIGN_OP
-            break
+		if case('}'):
+			addChar()
+			nextToken = RIGHT_BRACKET
+			break    
 
-        if case('#{'):
-            addChar()
-            nextToken = LEFT_BRACKET
-            break
+		if case('.'):
+			addChar()
+			nextToken = FLOAT_PT
+			break
 
-        if case('}'):
-            addChar()
-            nextToken = RIGHT_BRACKET    
-            break    
+		if case('?'):
+			addChar()
+			nextToken = COMMENT
+			break
 
-        if case('!='):
-            addChar()
-            nextToken = NOT_EQ
-            break
+		if case(','):
+			addChar()
+			nextToken = COMMA
+			break
 
-        if case('>'):
-            addChar()
-            nextToken = GREATER_THAN
-            break
+		if case('"'):
+			addChar()
+			nextToken = QUOTE
+			break
 
-        if case('<'):
-            addChar()
-            nextToken = LESS_THAN
-            break
+		if case(';'):
+			addChar()
+			nextToken = COLON
+			break
 
-        if case('>='):
-            addChar()
-            nextToken = GT_EQ
-            break
+		# end
 
-        if case('<='):
-            addChar()
-            nextToken = LT_EQ
-            break
+		if case('\n'):
+			addChar()
+			nextToken = EOL
+			lexeme = []
+			lexeme.append("EOL")
+			break
 
-        if case('=='):
-            addChar()
-            nextToken = EQUAL
-            break
+		else:
+			addChar()
+			nextToken = EOF
+			break
+		break
 
-        if case('++'):
-            addChar()
-            nextToken = ITER_PLUS
-            break
-
-        if case('--'):
-            addChar()
-            nextToken = ITER_MINUS
-            break
-
-        if case('.'):
-            addChar()
-            nextToken = FLOAT_PT
-            break
-
-        if case('@int'):
-            addChar()
-            nextToken = DEC_INT
-            break
-
-        if case('@float'):
-            addChar()
-            nextToken = DEC_FLOAT
-            break
-
-        if case('#if'):
-            addChar()
-            nextToken = IF_COND
-            break
-
-        if case('#elif'):
-            addChar()
-            nextToken = ELIF_COND
-            break
-
-        if case('#else'):
-            addChar()
-            nextToken = ELSE_COND
-            break
-
-        if case('#print'):
-            addChar()
-            nextToken = PRINT_OUTPUT
-            break
-
-        if case('#read'):
-            addChar()
-            nextToken = READ_INPUT
-            break
-
-        if case('#for'):
-            addChar()
-            nextToken = FOR_COND
-            break
-
-        if case('#call'):
-            addChar()
-            nextToken = CALL_FUNC
-            break
-
-        if case('#end'):
-            addChar()
-            nextToken = END_DELIM
-            break
-
-        if case('?'):
-            addChar()
-            nextToken = COMMENT
-            break
-
-        if case('#startprogram'):
-            addChar()
-            nextToken = START_PROG
-            break
-
-        if case('#endprogram'):
-            addChar()
-            nextToken = END_PROG
-            break
-
-        if case('#function'):
-            addChar()
-            nextToken = SEP_FUNC
-            break
-
-        if case(','):
-            addChar()
-            nextToken = COMMA
-            break
-
-        if case('"'):
-            addChar()
-            nextToken = QUOTE
-            break
-
-        if case(';'):
-            addChar()
-            nextToken = COLON
-            break
-
-        # end
-
-        if case('\n'):
-            addChar()
-            nextToken = EOL
-            lexeme = []
-            lexeme.append("EOL")
-            break
-
-        else:
-            addChar()
-            nextToken = EOF
-            break
-        break
-
-    return nextToken
+	return nextToken
 
 def getNoneBlank():
-    global charClass
-    global nextChar
-    global nextToken
-    global lexLen
-    global token
-    global a
-    global b
-    global c
-    while (nextChar==' ' or nextChar=='\v' or nextChar=='\t' or nextChar=='\f' or nextChar=='\r'):
-        getChar()
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	while (nextChar==' ' or nextChar=='\v' or nextChar=='\t' or nextChar=='\f' or nextChar=='\r'):
+		getChar()
 
 def lex():
-    global charClass
-    global nextChar
-    global nextToken
-    global lexLen
-    global token
-    global a
-    global b
-    global c
-    global lexeme
-    #print "pasok lex"
-    global nextToken
-    lexLen = 0
-    getNoneBlank()
-    while switch(charClass):
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	global lexeme
+	#print "pasok lex"
+	global nextToken
+	lexLen = 0
+	getNoneBlank()
+	while switch(charClass):
 
-        if case(LETTER):
-            #print "letter"
-            addChar()
-            getChar()
-            while (charClass == LETTER or charClass == DIGIT):
-                addChar()
-                getChar()
-            nextToken = VAR
-            break
-        if case(DIGIT):
-            addChar()
-            getChar()
-            while (charClass == DIGIT):
-                addChar()
-                getChar()
-            nextToken = INT_LIT
-            break
-        if case(HASH):
-            addChar()
-            getChar()
-            while (charClass == LETTER):
-                addChar()
-                getChar()
-            s = "#startprogram"
-            d = "#endprogram"
-            lexeme = ''.join(lexeme)
-            if (lexeme == s):
-                nextToken = START_PROG
-            elif(lexeme == d):
-                nextToken = END_PROG
-            break
+		if case(LETTER):
+			#print "letter"
+			addChar()
+			getChar()
+			while (charClass == LETTER or charClass == DIGIT):
+				addChar()
+				getChar()
+			nextToken = VAR
+			break
 
-        if case(AT):
-            addChar()
-            getChar()
-            while (charClass == LETTER):
-                addChar()
-                getChar()
-            s = "@int"
-            d = "@float"
-            lexeme = ''.join(lexeme)
-            if (lexeme == s):
-                nextToken = START_PROG
-            elif(lexeme == d):
-                nextToken = END_PROG
-            break
+		if case(DIGIT):
+			addChar()
+			getChar()
+			while (charClass == DIGIT):
+				addChar()
+				getChar()
+			nextToken = INT_LIT
+			break
 
-        if case(UNKNOWN):
-            lookup(nextChar)
-            getChar()
-            break
-        if case(EOF):
-            nextToken = EOF
-            lexeme.append("EOL")
-            break
-        print nextToken
-        break
-    #if (nextToken==EOL):
-    #    a = -1
-    #else:
-    #    a = nextToken
-    if (c==0):
-        print "Next token is: %(",nextToken,"), Next lexeme is %(",lexeme,")\n"
-    lexeme = []
-    return nextToken
+		if case(HASH):
+			addChar()
+			getChar()
+
+			if (charClass == BRACKET):
+				addChar()
+				getChar()
+				lexeme = ''.join(lexeme)
+				nextToken = LEFT_BRACKET
+			else:
+				while (charClass == LETTER):
+					addChar()
+					getChar()
+
+				str1 = "#startprogram"
+				str2 = "#endprogram"
+				str3 = "#if"
+				str4 = "#elif"
+				str5 = "#else"
+				str6 = "#print"
+				str7 = "#read"
+				str8 = "#for"
+				str9 = "#call"
+				str10 = "#end"
+				str11 = "#function"
+
+				lexeme = ''.join(lexeme)
+				if (lexeme == str1):
+					nextToken = START_PROG
+				elif(lexeme == str2):
+					nextToken = END_PROG
+				elif(lexeme == str3):
+					nextToken = IF_COND
+				elif(lexeme == str4):
+					nextToken = ELIF_COND
+				elif(lexeme == str5):
+					nextToken = ELSE_COND
+				elif(lexeme == str6):
+					nextToken = PRINT_OUTPUT
+				elif(lexeme == str7):
+					nextToken = READ_INPUT
+				elif(lexeme == str8):
+					nextToken = FOR_COND
+				elif(lexeme == str9):
+					nextToken = CALL_FUNC
+				elif(lexeme == str10):
+					nextToken = END_DELIM
+				elif(lexeme == str11):
+					nextToken = SEP_FUNC
+				else:
+					nextToken = UNKNOWN
+				break
+
+		if case(DEC):
+			addChar()
+			getChar()
+			while (charClass == LETTER):
+				addChar()
+				getChar()
+
+			str1 = "@int"
+			str2 = "@float"
+			lexeme = ''.join(lexeme)
+			if (lexeme == str1):
+				nextToken = DEC_INT
+			elif(lexeme == str2):
+				nextToken = DEC_FLOAT
+			else:
+				nextToken = UNKNOWN
+			break
+
+		if case(GREAT):
+			addChar()
+			getChar()
+			if (charClass == EQ):
+				addChar()
+				getChar()
+				lexeme = ''.join(lexeme)
+				nextToken = GT_EQ
+			else:
+				nextToken = GREATER_THAN
+			break
+
+		if case(LESS):
+			addChar()
+			getChar()
+			if (charClass == EQ):
+				addChar()
+				getChar()
+				lexeme = ''.join(lexeme)
+				nextToken = LT_EQ
+			else:
+				nextToken = LESS_THAN
+			break
+
+		if case(EQ):
+			addChar()
+			getChar()
+			if (charClass == EQ):
+				addChar()
+				getChar()
+				lexeme = ''.join(lexeme)
+				nextToken = EQUAL
+			else:
+				nextToken = ASSIGN_OP
+			break
+
+		if case(EX):
+			addChar()
+			getChar()
+			if (charClass == EQ):
+				addChar()
+				getChar()
+				lexeme = ''.join(lexeme)
+				nextToken = NOT_EQ
+			else:
+				nextToken = UNKNOWN
+			break
+
+		if case(ADD):
+			addChar()
+			getChar()
+			if (charClass == ADD):
+				addChar()
+				getChar()
+				lexeme = ''.join(lexeme)
+				nextToken = ITER_PLUS
+			else:
+				nextToken = ADD_OP
+			break
+
+		if case(MINUS):
+			addChar()
+			getChar()
+			if (charClass == MINUS):
+				addChar()
+				getChar()
+				lexeme = ''.join(lexeme)
+				nextToken = ITER_MINUS
+			else:
+				nextToken = SUB_OP
+			break
+
+		if case(UNKNOWN):
+			lookup(nextChar)
+			getChar()
+			break
+
+		if case(EOF):
+			nextToken = EOF
+			lexeme.append("EOL")
+			break
+
+		print nextToken
+		break
+	#if (nextToken==EOL):
+	#    a = -1
+	#else:
+	#    a = nextToken
+	if (c==0):
+		print "Next token is: %(",nextToken,"), Next lexeme is %(",lexeme,")\n"
+	lexeme = []
+	return nextToken
 
 def A():
-    global charClass
-    global nextChar
-    global nextToken
-    global lexLen
-    global token
-    global a
-    global b
-    global c
-    global lexeme
-    print "A"
-    while (nextToken==VAR):
-        lex()
-    if (nextToken==ASSIGN_OP):
-        while (nextToken!=EOL and nextToken!=EOF):
-            print nextToken
-            #if (nextToken==EOL or nextToken==EOF):
-            #    error()
-            #    b=1
-            #    break
-            #else:
-            lex()
-            expr()
-        if (b==0):
-            lex()
-            if (nextToken!=EOL and nextToken!=EOF):
-                error()
-            else:
-                print "exit A"
-        b=0
-    else:
-        error()
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	global lexeme
+	print "A"
+	while (nextToken==VAR):
+		lex()
+	if (nextToken==ASSIGN_OP):
+		while (nextToken!=EOL and nextToken!=EOF):
+			print nextToken
+			#if (nextToken==EOL or nextToken==EOF):
+			#    error()
+			#    b=1
+			#    break
+			#else:
+			lex()
+			expr()
+		if (b==0):
+			lex()
+			if (nextToken!=EOL and nextToken!=EOF):
+				error()
+			else:
+				print "exit A"
+		b=0
+	else:
+		error()
 
 def expr():
-    global charClass
-    global nextChar
-    global nextToken
-    global lexLen
-    global token
-    global a
-    global b
-    global c
-    global lexeme
-    print "expr"
-    term()
-    while (nextToken==ADD_OP or nextToken==SUB_OP):
-        lex()
-        term()
-    print "exit expr"
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	global lexeme
+	print "expr"
+	term()
+	while (nextToken==ADD_OP or nextToken==SUB_OP):
+		lex()
+		term()
+	print "exit expr"
 
 def term():
-    global charClass
-    global nextChar
-    global nextToken
-    global lexLen
-    global token
-    global a
-    global b
-    global c
-    global lexeme
-    print "term"
-    factor()
-    while (nextToken==MULT_OP or nextToken==DIV_OP or nextToken==MOD):
-        lex()
-        factor()
-    print "exit term"
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	global lexeme
+	print "term"
+	factor()
+	while (nextToken==MULT_OP or nextToken==DIV_OP or nextToken==MOD):
+		lex()
+		factor()
+	print "exit term"
 
 def factor():
-    global charClass
-    global nextChar
-    global nextToken
-    global lexLen
-    global token
-    global a
-    global b
-    global c
-    global lexeme
-    print "factor"
-    if (nextToken==VAR or nextToken==INT_LIT):
-        lex()
-    else:
-        if (nextToken==LEFT_PAREN):
-            lex()
-            expr()
-            if (nextToken==RIGHT_PAREN):
-                lex()
-            else:
-                error()
-        else:
-            error()
-    print "exit factor"
-            
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	global lexeme
+	print "factor"
+	if (nextToken==VAR or nextToken==INT_LIT):
+		lex()
+	else:
+		if (nextToken==LEFT_PAREN):
+			lex()
+			expr()
+			if (nextToken==RIGHT_PAREN):
+				lex()
+			else:
+				error()
+		else:
+			error()
+	print "exit factor"
+			
 def program():
-    global charClass
-    global nextChar
-    global nextToken
-    global lexLen
-    global token
-    global a
-    global b
-    global c
-    global lexeme
-    print "start program\n"
-    while (nextToken==START_PROG):
-        lex()
-    if (nextToken==EOL):
-        while (nextToken!=END_PROG):
-            print nextToken
-            if (nextToken==EOF):
-            	error()
-            	b=1
-            	break
-            lex() # \n
-            block1()
-        if (b==0):
-            lex() # endprog
-            if (nextToken!=EOF):
-                # error()
-                outsideprog()
-            else:
-                print "end of code\n"
-        b=0
-    else:
-        error()
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	global lexeme
+	print "start program\n"
+	while (nextToken==START_PROG):
+		lex()
+	if (nextToken==EOL):
+		while (nextToken!=END_PROG):
+			print nextToken
+			if (nextToken==EOF):
+				error()
+				b=1
+				break
+			lex() # \n
+			block1()
+		if (b==0):
+			lex() # endprog
+			if (nextToken!=EOF):
+				# error()
+				outsideprog()
+			else:
+				print "end of code\n"
+		b=0
+	else:
+		error()
 
 def outsideprog():
-    global charClass
-    global nextChar
-    global nextToken
-    global lexLen
-    global token
-    global a
-    global b
-    global c
-    global lexeme
-    print "outside program\n"
-    while (nextToken==SEP_FUNC):
-        lex()
-        func()
-    if (nextToken==EOL):
-        while (nextToken!=EOF):
-            print nextToken
-            # if (nextToken==EOF):
-            # 	error()
-            # 	b=1
-            # 	break
-            lex() # \n
-            outsideprog()
-            print "exit outside prog\n"
-        print "end of code1\n"
-    else:
-        error()
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	global lexeme
+	print "outside program\n"
+	while (nextToken==SEP_FUNC):
+		lex()
+		func()
+	if (nextToken==EOL):
+		while (nextToken!=EOF):
+			print nextToken
+			# if (nextToken==EOF):
+			#   error()
+			#   b=1
+			#   break
+			lex() # \n
+			outsideprog()
+			print "exit outside prog\n"
+		print "end of code1\n"
+	else:
+		error()
 
 def func():
-    global charClass
-    global nextChar
-    global nextToken
-    global lexLen
-    global token
-    global a
-    global b
-    global c
-    global lexeme
-    print "separate function\n"
-    while (nextToken==SEP_FUNC):
-        lex() # VAR
-    if (nextToken==VAR):
-    	lex() # (
-    	if (nextToken==LEFT_PAREN):
-    		lex() # var or )
-    		param()
-    		if (nextToken==RIGHT_PAREN):
-    			lex() # EOL
-    			while (nextToken!=END_DELIM):
-    				lex()
-    				block1()
-    			print "end of separate function"
-    			lex()
-    		else: error()
-    	else: error()
-    else: error()
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	global lexeme
+	print "separate function\n"
+	while (nextToken==SEP_FUNC):
+		lex() # VAR
+	if (nextToken==VAR):
+		lex() # (
+		if (nextToken==LEFT_PAREN):
+			lex() # var or )
+			param()
+			if (nextToken==RIGHT_PAREN):
+				lex() # EOL
+				while (nextToken!=END_DELIM):
+					lex()
+					block1()
+				print "end of separate function"
+				lex()
+			else: error()
+		else: error()
+	else: error()
 
 def block1():
 	global charClass
@@ -599,12 +624,12 @@ def block1():
 	global token
 	print "block w/ declaration\n"
 	while (nextToken==DEC_INT or nextToken==DEC_FLOAT):
-	    declare()
+		declare()
 
 	if (nextToken==EOL):
 		lex()
 		block()
-	else: error()
+	# else: error()
 
 def declare():
 	global charClass
@@ -684,8 +709,8 @@ def param():
 	global lexeme
 	print "parameter\n"
 	if (nextToken==VAR or nextToken==INT_LIT):
-	    lex() # COMMA OR )
-	    param1()
+		lex() # COMMA OR )
+		param1()
 
 def param1():
 	global charClass
@@ -699,8 +724,8 @@ def param1():
 	global lexeme
 	print "parameter 1\n"
 	if (nextToken==COMMA):
-	    lex() # VAR/INT
-	    param()
+		lex() # VAR/INT
+		param()
 
 def block():
 	global charClass
@@ -714,11 +739,11 @@ def block():
 	global lexeme
 	print "block\n"
 	if (nextToken==VAR or nextToken==PRINT_OUTPUT or nextToken==READ_INPUT or nextToken==FOR_COND or nextToken==IF_COND or nextToken==CALL_FUNC or nextToken==COMMENT):
-	    # lex()
-	    function()
-	    if (nextToken==EOL):
-	    	lex()
-	    	block()
+		# lex()
+		function()
+		if (nextToken==EOL):
+			lex()
+			block()
 
 def function():
 	global charClass
@@ -732,7 +757,7 @@ def function():
 	global lexeme
 	print "function\n"
 	if (nextToken==VAR):
-	    A()
+		A()
 	elif (nextToken==PRINT_OUTPUT):
 		print_out()
 	elif (nextToken==READ_INPUT):
@@ -760,15 +785,39 @@ def print_out():
 	print "print function\n"
 	lex()
 	if (nextToken==QUOTE):
-	    lex()
-	    while(nextToken!=QUOTE):
-	    	lex()
-	    	strexpr()
-	    lex() # end
-	    
-	    if (nextToken==END_DELIM):
-	    	lex()
-	    else: error()
+		lex()
+		while(nextToken!=QUOTE):
+			lex()
+			strexpr()
+		lex() # end
+		if (nextToken==END_DELIM):
+			lex()
+			if (nextToken==EOL):
+				lex()
+			else: error()
+		else: error()
+	else: error()
+
+def read_in():
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	global lexeme
+	print "read function\n"
+	lex()
+	if (nextToken==VAR):
+		lex()
+		if(nextToken==END_DELIM):
+			lex()
+			if (nextToken==EOL):
+				lex()
+			else: error()
+		else: error()
 	else: error()
 
 def strexpr():
@@ -783,8 +832,8 @@ def strexpr():
 	global lexeme
 	print "strexpr\n"
 	if (nextToken==VAR):
-	    lex()
-	    comment_out()
+		lex()
+		comment_out()
 	elif (nextToken==LEFT_BRACKET):
 		lex()
 		if (nextToken==VAR):
@@ -793,7 +842,8 @@ def strexpr():
 				lex()
 			else: error()
 		else: error()
-	else: error()
+	# else: error()
+
 
 def comment_out():
 	global charClass
@@ -808,15 +858,15 @@ def comment_out():
 	print "comment\n"
 
 	while (nextToken==VAR or nextToken==INT_LIT):
-	    lex()
-	    if (nextToken==QUOTE):
-	    	break
-	    elif (nextToken==COMMENT):
-	    	lex()
-	    	if(nextToken==EOL):
-	    		lex()
-	    		break
-	    	else: error()
+		lex()
+		if (nextToken==QUOTE):
+			break
+		elif (nextToken==COMMENT):
+			lex()
+			if(nextToken==EOL):
+				lex()
+				break
+			else: error()
 
 def call_function():
 	global charClass
@@ -832,20 +882,20 @@ def call_function():
 
 	lex()
 	if (nextToken==VAR):
-	    lex()
-	    if (nextToken==LEFT_PAREN):
-	    	lex()
-	    	param()
-	    	if (nextToken==RIGHT_PAREN):
-	    		lex()
-	    		if (nextToken==END_DELIM):
-	    			lex()
-	    			if (nextToken==EOL):
-	    				lex()
-	    			else: error()
-	    		else: error()
-	    	else: error()
-	    else: error()
+		lex()
+		if (nextToken==LEFT_PAREN):
+			lex()
+			param()
+			if (nextToken==RIGHT_PAREN):
+				lex()
+				if (nextToken==END_DELIM):
+					lex()
+					if (nextToken==EOL):
+						lex()
+					else: error()
+				else: error()
+			else: error()
+		else: error()
 	else: error()
 
 def if_cont():
@@ -862,24 +912,24 @@ def if_cont():
 
 	lex()
 	if (nextToken==LEFT_PAREN):
-	    lex()
-	    if (nextToken==VAR):
-	    	lex()
-	    	cond()
-	    	if (nextToken==RIGHT_PAREN):
-	    		lex()
-	    		if (nextToken==EOL):
-	    			lex()
-	    			block()
-	    			if (nextToken==ELIF_COND):
-	    				elif_cont()
-	    			if (nextToken==ELSE_COND):
-	    				else_cont()
-	    			if (nextToken==END_DELIM):
-	    				lex()
-	    				if (nextToken==EOL):
-	    					lex()
-	    				else: error()
+		lex()
+		if (nextToken==VAR):
+			lex()
+			cond()
+			if (nextToken==RIGHT_PAREN):
+				lex()
+				if (nextToken==EOL):
+					lex()
+					block()
+					if (nextToken==ELIF_COND):
+						elif_cont()
+					if (nextToken==ELSE_COND):
+						else_cont()
+					if (nextToken==END_DELIM):
+						lex()
+						if (nextToken==EOL):
+							lex()
+						else: error()
 					# else: error()
 				else: error()
 			else: error()
@@ -900,17 +950,17 @@ def elif_cont():
 
 	lex()
 	if (nextToken==LEFT_PAREN):
-	    lex()
-	    if (nextToken==VAR):
-	    	lex()
-	    	cond()
-	    	if (nextToken==RIGHT_PAREN):
-	    		lex()
-	    		if (nextToken==EOL):
-	    			lex()
-	    			block()
-	    			if (nextToken==ELIF_COND):
-	    				elif_cont()
+		lex()
+		if (nextToken==VAR):
+			lex()
+			cond()
+			if (nextToken==RIGHT_PAREN):
+				lex()
+				if (nextToken==EOL):
+					lex()
+					block()
+					if (nextToken==ELIF_COND):
+						elif_cont()
 				else: error()
 			else: error()
 		else: error()
@@ -1006,31 +1056,31 @@ def cond():
 	else: error()
 
 def error():
-    global charClass
-    global nextChar
-    global nextToken
-    global lexLen
-    global token
-    global a
-    global b
-    global c
-    global lexeme
-    print "Syntax Error!"
-    if (nextToken!=EOL and nextToken!=EOF):
-        while (nextToken!=EOL and nextToken!=EOF):
-            nextChar = f.read(1)
-            if (nextChar == '\n'):
-                nextToken = EOL
-                c = 1
-                lex()
-                c = 0
-                break
-            elif (nextChar == EOF):
-                nextToken = EOF
-                break
-    
+	global charClass
+	global nextChar
+	global nextToken
+	global lexLen
+	global token
+	global a
+	global b
+	global c
+	global lexeme
+	print "Syntax Error!"
+	if (nextToken!=EOL and nextToken!=EOF):
+		while (nextToken!=EOL and nextToken!=EOF):
+			nextChar = f.read(1)
+			if (nextChar == '\n'):
+				nextToken = EOL
+				c = 1
+				lex()
+				c = 0
+				break
+			elif (nextChar == EOF):
+				nextToken = EOF
+				break
+	
 f = open("hashrdtest.txt", 'r')
 getChar()
 while(nextToken!=EOF):
-    lex()
-    program()
+	lex()
+	program()

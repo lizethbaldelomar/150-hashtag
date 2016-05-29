@@ -1,6 +1,15 @@
-++startprogram
-@int hehe = 1
-
-#print #{hehe}
-
+#startprogram
+@int year
+@int minyear
+@int maxyear
+#print "Enter the lowest year " #end
+#read minyear #end
+#print "Enter the highest year " #end
+#read maxyear #end
+#print "Leap years in given range are " #end
+#for (year = minyear; year <= maxyear; year++)
+#if (((year%4 == 0) and (year%100 != 0)) or (year % 400 == 0))
+#print "#{year}" #end
+#end
+#end
 #endprogram
