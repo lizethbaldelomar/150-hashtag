@@ -1,85 +1,22 @@
-Programs
-<program> -> <form>*
-<form> -> <definition> | <expression>
-
-Definitions
-<definition> -> <variable definition>
-<variable> -> <identifier>
-<keyword> -> <identifier>
-<variable definition> -> counterpart defining fxns, variables
-
-Expressions
-<expression> -> <constant>
-                <variable>
-                counterpart ng if
-<constant> -> <number>
-
-Identifiers
-<identifier> -> <initial><subsequent>*| + | - | ...
-<initial> -> <letter> | ! | #
-<subsequent> -> <letter> | <digit>
-<letter> -> a | b | ... | z | A | B | ... | Z
-<digit> -> 0 | 1 | ... | 9
-
-Data
-<datum> -> <int> | <float>
-<int> -> 0 | 1 | ... | 9
-<float> -> <int>.<int>
-
-Numbers
-<sign> -> <empty> | + | -
-<digit 10> -> <digit>
-
-—
-
-( sorry pero di ko kasi magets yung grammar sa taas lol )
-( comment ba yung ‘!’ ???? :( )
-
 Program
-<program> -> #startprogram'\n'<block>#endprogram'\n'<outsideprog>
+<program> -> #startprogram'\n'<block1>#endprogram'\n'<outsideprog>
 <outsideprog> -> <func>'\n'<outsideprog> | epsilon
 
 Separate Function
-<func> -> #function <var> ( <param> )'\n' <block> #end
+<func> -> #function <var> ( <param> )'\n' <block1> #end
 <param> -> <param1> | epsilon
-<param1> -> <param1>,<id>|<id>
+<param1> -> <id>,<param1>|<id>
 
-Identifiers
-<id> -> <var> | <constant>
-<var> -> <var><alphanum> | <letter>
-<alphanum> -> <letter> | <digit>
-<letter> -> A | B | … | Z | a | b | … | z
-<digit> -> 0 | 1 | 2 | … | 9
-<constant> -> <sign><number>
-<number> -> <number><digit> | <digit>
-<sign> -> epsilon | + | -
-
-Declaration
-<declare> -> <type> <var> <init>
-<type> -> @int | @float
-<init> -> epsilon | =<expr>
-
+<block1> -> <declare>'\n'<block>
 <block> -> <function>'\n'<block> | <function>'\n'
 
+Declaration
+<declare> -> @int  <var> <init>| @float <var> <init1>
+<init> -> epsilon | =<constant>
+<init1> -> epsilon | =<constant>.<intlit>
+
 Functions
-<function> -> <print> | <read> | <for>#end | <if>#end | <assign> | <call>#end | ?<comment>?
-<print> -> #print "<strexpr>" #end
-<strexpr> -> #{<var>} | <comment>
-<call> -> #call <var>(<param>)
-<comment> -> <var>_<comment> | epsilon
-
-
-
-<if> -> #if (<cond>) <block> <elif> <else>
-<elif> -> #elif (<cond>) <block> <elif> | epsilon
-<else> -> #else <block> | epsilon
-
-<for> -> #for (<var>=<id>; <cond>; <var><iter>) <block>
-<iter> -> ++ | --
-
-<cond> -> <var> <rel> <id> | <bool>
-<rel> -> == | != | > | < | >= | <=
-<bool> -> true | false
+<function> -> <print> | <read> | <for> | <if> | <assign> | <call> | ?<comment>?
 
 <assign> -> <var> = <expr>
 <expr> -> <expr> <oper1> <term> | <term>
@@ -87,3 +24,29 @@ Functions
 <term> -> <term> <oper2> <factor> | <factor>
 <oper2> -> * | / | %
 <factor> -> (<expr>) | <id>
+
+Identifiers
+<id> -> <var> | <constant>
+<var> -> <var><alphanum> | <letter>
+<alphanum> -> <letter> | <digit>
+<letter> -> A | B | … | Z | a | b | … | z
+<digit> -> 0 | 1 | 2 | … | 9
+<constant> -> <sign><intlit>
+<sign> -> epsilon | + | -
+
+<print> -> #print "<strexpr>" #end
+<strexpr> -> #{<id>} | <comment>
+
+<comment> -> <var>_<comment> | epsilon
+
+<call> -> #call <var>(<param>) #end
+
+<if> -> #if (<cond>)'\n' <block> <elif> <else> #end
+<elif> -> #elif (<cond>) <block> '\n'<elif> | epsilon
+<else> -> #else <block> | epsilon
+
+<for> -> #for (<var>=<id>; <cond>; <var><iter>)'\n' <block>#end
+<iter> -> ++ | --
+
+<cond> -> <var> <rel> <id>
+<rel> -> == | != | > | < | >= | <=

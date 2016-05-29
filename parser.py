@@ -61,7 +61,7 @@ SEP_FUNC = 52
 COMMA = 53
 QUOTE = 54
 COLON = 55
-
+HASH = 2000
 #global
 
 def getChar():
@@ -87,7 +87,7 @@ def getChar():
         elif (nextChar.isdigit()):
             charClass = DIGIT
         elif (nextChar == "#"):
-        	charClass = LETTER
+        	charClass = HASH
         else:
             charClass = UNKNOWN
 
@@ -128,10 +128,7 @@ def lookup(ch):
 
         if case('+'):
             addChar()
-            if (getChar() == '+'):
-            	nextToken == ITER_PLUS
-            else:
-            	nextToken = ADD_OP
+            nextToken = ADD_OP
             break
 
         if case('-'):
@@ -307,11 +304,13 @@ def lookup(ch):
             lexeme = []
             lexeme.append("EOL")
             break
+
         else:
             addChar()
             nextToken = EOF
             break
         break
+
     return nextToken
 
 def getNoneBlank():
@@ -359,6 +358,21 @@ def lex():
                 getChar()
             nextToken = INT_LIT
             break
+        if case(HASH):
+            addChar()
+            getChar()
+            while (charClass == LETTER):
+                addChar()
+                getChar()
+            s = "#startprogram"
+            d = "#endprogram"
+            lexeme = ''.join(lexeme)
+            if (lexeme == s):
+                nextToken = START_PROG
+            elif(lexeme == d):
+                nextToken = END_PROG
+            break
+
         if case(UNKNOWN):
             lookup(nextChar)
             getChar()
