@@ -32,9 +32,8 @@ MULT_OP =23
 DIV_OP =24
 LEFT_PAREN =25
 RIGHT_PAREN =26
-COLON =200
+#COLON =200
 MOD =27
-
 
 #global
 
@@ -119,10 +118,10 @@ def lookup(ch):
             addChar()
             nextToken = DIV_OP
             break
-        if case(';'):
-            addChar()
-            nextToken = COLON
-            break
+        #if case(';'):
+        #    addChar()
+        #    nextToken = COLON
+        #    break
         if case('='):
             addChar()
             nextToken = ASSIGN_OP
@@ -218,15 +217,15 @@ def A():
     while (nextToken==IDENT):
         lex()
     if (nextToken==ASSIGN_OP):
-        while (nextToken!=COLON):
+        while (nextToken!=EOL and nextToken!=EOF):
             print nextToken
-            if (nextToken==EOL or nextToken==EOF):
-                error()
-                b=1
-                break
-            else:
-                lex()
-                expr()
+            #if (nextToken==EOL or nextToken==EOF):
+            #    error()
+            #    b=1
+            #    break
+            #else:
+            lex()
+            expr()
         if (b==0):
             lex()
             if (nextToken!=EOL and nextToken!=EOF):
