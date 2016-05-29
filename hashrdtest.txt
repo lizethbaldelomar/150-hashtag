@@ -1,0 +1,6 @@
+++startprogram
+@int hehe = 1
+
+#print #{hehe}
+
+#endprogram

@@ -1,5 +1,5 @@
-sum = a * 90;
-rae = b;a;
-rae101a1 = 0001901900;
+sum = a * 90
+rae = ba
+rae101a1 = 0001901900
 rae1 = a
-forever = (i+ love + bae) * 1000000;
+forever = (i+ love + bae) * 1000000
