@@ -47,23 +47,20 @@ Identifiers
 
 Declaration
 <declare> -> <type> <var> <init>
-<type> -> @int | @float | @char | ...
+<type> -> @int | @float
 <init> -> epsilon | =<expr>
 
 Functions
-<function> -> <print> | *<while>#end | <read> | <for>#end | <if>#end | ... | <assign> | <call>#end | ?<comment>?
+<function> -> <print> | <read> | <for>#end | <if>#end | <assign> | <call>#end | ?<comment>?
 <print> -> #print "<strexpr>" #end
 <strexpr> -> #{<var>} | <comment>
-<call> -> #<var>(<param>)
+<call> -> #call <var>(<param>)
 <comment> -> <var>_<comment> | epsilon
 
 Separate Function
 <func> -> #function <var> ( <param> ) <block> #end
 <param> -> <param1> | epsilon
 <param1> -> <param1>,<id>|<id>
-*<ret> -> #return <id> | epsilon
-
-*<while> -> #while (<cond>) <block>
 
 <if> -> #if (<cond>) <block> <elif> <else>
 <elif> -> #elif (<cond>) <block> <elif> | epsilon
