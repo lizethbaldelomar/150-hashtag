@@ -33,7 +33,7 @@ DIV_OP =24
 LEFT_PAREN =25
 RIGHT_PAREN = 26
 MOD = 27
-COLON = 200
+#COLON = 200
 
 LEFT_BRACKET = 28
 RIGHT_BRACKET = 29
@@ -317,15 +317,15 @@ def A():
     while (nextToken==IDENT):
         lex()
     if (nextToken==ASSIGN_OP):
-        while (nextToken!=COLON):
+        while (nextToken!=EOL and nextToken!=EOF):
             print nextToken
-            if (nextToken==EOL or nextToken==EOF):
-                error()
-                b=1
-                break
-            else:
-                lex()
-                expr()
+            #if (nextToken==EOL or nextToken==EOF):
+            #    error()
+            #    b=1
+            #    break
+            #else:
+            lex()
+            expr()
         if (b==0):
             lex()
             if (nextToken!=EOL and nextToken!=EOF):
