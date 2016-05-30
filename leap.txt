@@ -2,11 +2,11 @@
 @int year
 @int minyear
 @int maxyear
-#print "Enter the lowest year " #end
+#print "Enter the lowest year \n" #end
 #read minyear #end
-#print "Enter the highest year " #end
+#print "Enter the highest year \n" #end
 #read maxyear #end
-#print "Leap years in given range are " #end
+#print "Leap years in given range are:\n" #end
 #for (year = minyear; year <= maxyear; year++)
 #if (year%4 == 0)
 #if (year%100 != 0)
