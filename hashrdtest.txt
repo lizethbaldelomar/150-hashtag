@@ -1,24 +1,30 @@
 #startprogram
-@int i
-#call factorial() #end
+	@int i
+
+	#call factorial() #end
+
 #endprogram
 
 #function factorial()
-@int i
-@int factorial = 1
-@int input
-#read input #end
-#if (input < 0)
-#print "Sorry factorial does not exist for negative numbers" #end
-#elif (input == 0)
-#print "The factorial of 0 is 1" #end
-#else
-#for (i = 1; i <= input; i++)
-factorial = factorial * i
-#end
-#end
-#print "The factorial of " #end
-#print "#{input}" #end
-#print "is " #end
-#print "#{factorial}" #end
+	@int i
+	@int factorial = 1
+	@int input
+
+	#read input #end
+
+	#if (input < 0)
+		#print "Sorry factorial does not exist for negative numbers" #end
+	#elif (input == 0)
+		#print "The factorial of 0 is 1" #end
+	#else
+		#for (i = 1; i <= input; i++)
+		factorial = factorial * i
+		#end
+	#end
+
+	#print "The factorial of " #end
+	#print "#{input}" #end
+	#print "is " #end
+	#print "#{factorial}" #end
+
 #end
