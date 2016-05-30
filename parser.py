@@ -458,11 +458,12 @@ def A():
 			lex()
 			expr()
 		if (b==0):
-			# lex()
+			print nextToken
 			if (nextToken!=EOL and nextToken!=EOF):
 				error()
 			else:
 				print "exit A"
+
 		b=0
 	else:
 		error()
@@ -524,6 +525,7 @@ def factor():
 				error()
 		else:
 			error()
+	print nextToken
 	print "exit factor"
 			
 def program():
@@ -741,6 +743,9 @@ def block():
 	global lexeme
 	print "block\n"
 	print nextToken
+	
+	while(nextToken==EOL):
+		lex()
 	if (nextToken==VAR or nextToken==PRINT_OUTPUT or nextToken==READ_INPUT or nextToken==FOR_COND or nextToken==IF_COND or nextToken==CALL_FUNC or nextToken==COMMENT):
 		#lex()
 		function()
