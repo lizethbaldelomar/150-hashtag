@@ -458,7 +458,7 @@ def A():
 			lex()
 			expr()
 		if (b==0):
-			lex()
+			# lex()
 			if (nextToken!=EOL and nextToken!=EOF):
 				error()
 			else:
@@ -1058,7 +1058,7 @@ def cond():
 
 	if (nextToken==VAR):
 		lex()
-		if (nextToken==EQUAL or nextToken==NOT_EQ or nextToken==GREATER_THAN or nextToken==LESS_THAN or nextToken==GT_EQ or nextToken==LT_EQ):
+		if (nextToken==EQUAL or nextToken==NOT_EQ or nextToken==GREATER_THAN or nextToken==LESS_THAN or nextToken==GT_EQ or nextToken==LT_EQ or nextToken==MOD):
 			lex()
 			if (nextToken==VAR or nextToken==INT_LIT):
 				lex()
