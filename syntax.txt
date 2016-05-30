@@ -50,7 +50,5 @@ Identifiers
 <for> -> #for (<var>=<id>; <cond>; <var><iter>)'\n' <block>#end
 <iter> -> ++ | --
 
-<cond> -> <var> <rel> <id>
+<cond> -> <expr> <rel> <expr>
 <rel> -> == | != | > | < | >= | <=
-
-<cond> -> <var> <rel> <id> | <cond> and <var> <rel> <id> | <cond> or <var> <rel> <id>

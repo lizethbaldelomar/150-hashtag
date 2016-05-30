@@ -11,8 +11,9 @@
 #if (year%4 == 0)
 #if (year%100 != 0)
 #print "#{year}" #end
-#elif (year % 400 == 0)
+#elif (year == 0)
 #print "#{year}" #end
+#end
 #end
 #end
 #endprogram

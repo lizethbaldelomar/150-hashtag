@@ -1057,11 +1057,12 @@ def cond():
 	print "condition\n"
 
 	if (nextToken==VAR):
-		lex()
-		if (nextToken==EQUAL or nextToken==NOT_EQ or nextToken==GREATER_THAN or nextToken==LESS_THAN or nextToken==GT_EQ or nextToken==LT_EQ or nextToken==MOD):
+		expr()
+		print nextToken
+		if (nextToken==EQUAL or nextToken==NOT_EQ or nextToken==GREATER_THAN or nextToken==LESS_THAN or nextToken==GT_EQ or nextToken==LT_EQ):
 			lex()
 			if (nextToken==VAR or nextToken==INT_LIT):
-				lex()
+				expr()
 			else: error()
 		else: error()
 	else: error()
