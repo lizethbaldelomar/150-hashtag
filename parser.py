@@ -743,7 +743,7 @@ def block():
 	global lexeme
 	print "block\n"
 	print nextToken
-	
+
 	while(nextToken==EOL):
 		lex()
 	if (nextToken==VAR or nextToken==PRINT_OUTPUT or nextToken==READ_INPUT or nextToken==FOR_COND or nextToken==IF_COND or nextToken==CALL_FUNC or nextToken==COMMENT):
@@ -778,6 +778,7 @@ def function():
 	elif (nextToken==CALL_FUNC):
 		call_function()
 	elif (nextToken==COMMENT):
+		lex()
 		comment_out()
 	else: error()
 
@@ -884,9 +885,10 @@ def comment_out():
 			lex()
 			if(nextToken==EOL):
 				lex()
-				break
 			else: error()
+			break
 	print "end of comment"
+
 def call_function():
 	global charClass
 	global nextChar
