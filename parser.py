@@ -82,7 +82,7 @@ def getChar():
 		global nextToken
 		global lexLen
 		global token
-		global a
+
 		global b
 		global c
 		#print "pasok getChar"
@@ -126,7 +126,6 @@ def addChar():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
@@ -142,7 +141,6 @@ def lookup(ch):
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	#print "lookup"
@@ -236,7 +234,6 @@ def getNoneBlank():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	while (nextChar==' ' or nextChar=='\v' or nextChar=='\t' or nextChar=='\f' or nextChar=='\r'):
@@ -249,20 +246,17 @@ def lex():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
 	lexeme = []
-	#print "pasok lex"
 	global nextToken
 	lexLen = 0
 	getNoneBlank()
 	while switch(charClass):
 
 		if case(LETTER):
-			#print "letter"
 			addChar()
 			getChar()
 			while (charClass == LETTER or charClass == DIGIT):
@@ -435,13 +429,7 @@ def lex():
 			nextToken = EOF
 			lexeme.append("EOL")
 			break
-
-		#print nextToken
 		break
-	#if (nextToken==EOL):
-	#    a = -1
-	#else:
-	#    a = nextToken
 	if (c==0):
 		print "Next token is: %(",nextToken,"), Next lexeme is %(",lexeme,")\n"
 	return nextToken
@@ -453,12 +441,11 @@ def A():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "A"
+	print "Enter <assign>"
 	for num in range(0,tabs):
 		g.write("\t")
 	while (nextToken==VAR):
@@ -467,24 +454,17 @@ def A():
 	if (nextToken==ASSIGN_OP):
 		g.write(" = ")
 		while (nextToken!=EOL and nextToken!=EOF):
-			#print nextToken
-			#if (nextToken==EOL or nextToken==EOF):
-			#    error()
-			#    b=1
-			#    break
-			#else:
 			lex()
 			expr2()
 		if (b==0):
 			print nextToken
 			if (nextToken!=EOL and nextToken!=EOF):
-				error()
+				print "Reached end of file."
 			else:
-				print "exit A"
-
+				print "Exit <assign>"
 		b=0
 	else:
-		error()
+		print "\nSyntax error. Expected '='\n"
 	g.write("\n")
 
 def expr():
@@ -494,20 +474,19 @@ def expr():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
 	str3 = []
-	print "expr"
+	print "Enter <expr>"
 	term()
 	while (nextToken==ADD_OP or nextToken==SUB_OP):
 		lexeme = ''.join(lexeme)
 		str3.append(lexeme)
 		lex()
 		term()
-	print "exit expr"
+	print "Exit <expr>"
 
 def term():
 	global charClass
@@ -516,19 +495,18 @@ def term():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "term"
+	print "Enter <term>"
 	factor()
 	while (nextToken==MULT_OP or nextToken==DIV_OP or nextToken==MOD):
 		lexeme = ''.join(lexeme)
 		str3.append(lexeme)
 		lex()
 		factor()
-	print "exit term"
+	print "Exit <term>"
 
 def factor():
 	global charClass
@@ -537,32 +515,27 @@ def factor():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "factor"
+	print "Enter <factor>"
 	if (nextToken==VAR or nextToken==INT_LIT):
 		lexeme = ''.join(lexeme)
 		str3.append(lexeme)
 		lex()
-	else:
-		if (nextToken==LEFT_PAREN):
+	elif (nextToken==LEFT_PAREN):
+		lexeme = ''.join(lexeme)
+		str3.append(lexeme)
+		lex()
+		expr()
+		if (nextToken==RIGHT_PAREN):
 			lexeme = ''.join(lexeme)
 			str3.append(lexeme)
 			lex()
-			expr()
-			if (nextToken==RIGHT_PAREN):
-				lexeme = ''.join(lexeme)
-				str3.append(lexeme)
-				lex()
-			else:
-				error()
-		else:
-			error()
-	print nextToken
-	print "exit factor"
+		else: print "\nSyntax error. Expected ')'\n"
+	else: print "\nSyntax error. Expected VAR, INT, or '('\n"
+	print "Exit <factor>"
 
 def expr2():
 	global charClass
@@ -571,18 +544,17 @@ def expr2():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "expr"
+	print "Enter <expr>"
 	term2()
 	while (nextToken==ADD_OP or nextToken==SUB_OP):
 		g.write(' '.join(map(str, lexeme)).replace(" ", ""))
 		lex()
 		term2()
-	print "exit expr"
+	print "Exit <expr>"
 
 def term2():
 	global charClass
@@ -591,18 +563,17 @@ def term2():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "term"
+	print "Enter <term>"
 	factor2()
 	while (nextToken==MULT_OP or nextToken==DIV_OP or nextToken==MOD):
 		g.write(' '.join(map(str, lexeme)).replace(" ", ""))
 		lex()
 		factor2()
-	print "exit term"
+	print "Exit <term>"
 
 def factor2():
 	global charClass
@@ -611,27 +582,22 @@ def factor2():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "factor"
+	print "Enter <factor>"
 	if (nextToken==VAR or nextToken==INT_LIT):
 		g.write(' '.join(map(str, lexeme)).replace(" ", ""))
 		lex()
-	else:
-		if (nextToken==LEFT_PAREN):
+	elif (nextToken==LEFT_PAREN):
+		lex()
+		expr2()
+		if (nextToken==RIGHT_PAREN):
 			lex()
-			expr2()
-			if (nextToken==RIGHT_PAREN):
-				lex()
-			else:
-				error()
-		else:
-			error()
-	print nextToken
-	print "exit factor"
+		else: print "\nSyntax error. Expected ')'\n"
+	else: print "\nSyntax error. Expected VAR, INT, or '('\n"
+	print "Exit <factor>"
 			
 def program():
 	global charClass
@@ -640,37 +606,35 @@ def program():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "start program\n"
+	print "Enter <program>"
 	g.write("def main():\n")
 	while (nextToken==START_PROG):
 		lex()
 	tabs = tabs + 1
 	if (nextToken==EOL):
 		while (nextToken!=END_PROG):
-			#print nextToken
 			if (nextToken==EOF):
-				error()
+				print "\nSyntax error. Expected '#endprogram'\n"
 				b=1
 				break
 			lex() # \n
 			block1()
 		tabs = tabs-1
+		print "Exit <program>"
 		if (b==0):
 			lex() # endprog
 			if (nextToken!=EOF):
-				# error()
 				outsideprog()
 			else:
-				print "end of code\n"
+				pass
 		b=0
 	else:
-		error()
-	print "end program"
+		print "\nSyntax error. Expected 'EOL'\n"
+	print "\nEnd of code. Nothing follows."
 	for num in range(0,tabs):
 		g.write("\t")
 	g.write("\nmain()")
@@ -682,28 +646,21 @@ def outsideprog():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "outside program\n"
+	print "Enter <outsideprog>"
 	while (nextToken==SEP_FUNC):
 		lex()
 		func()
-	if (nextToken==EOL or nextToken==EOF): #edit
+	if (nextToken==EOL or nextToken==EOF):
 		while (nextToken!=EOF):
-			#print nextToken
-			# if (nextToken==EOF):
-			#   error()
-			#   b=1
-			#   break
-			lex() # \n
+			lex()
 			outsideprog()
-			print "exit outside prog\n"
-		print "end of code1\n"
 	else:
-		error()
+		pass
+	print "Exit <outsideprog>\n"
 
 def func():
 	global charClass
@@ -712,35 +669,34 @@ def func():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "separate function\n"
+	print "Enter <func>"
 	g.write("\ndef ")
 	while (nextToken==SEP_FUNC):
-		lex() # VAR
+		lex()
 	if (nextToken==VAR):
 		g.write(' '.join(map(str, lexeme)).replace(" ", ""))
-		lex() # (
+		lex()
 		if (nextToken==LEFT_PAREN):
 			g.write("(")
-			lex() # var or )
+			lex()
 			param()
 			if (nextToken==RIGHT_PAREN):
 				g.write("):\n")
 				tabs = tabs + 1
-				lex() # EOL
+				lex()
 				while (nextToken!=END_DELIM):
 					lex()
 					block1()
 				tabs = tabs - 1
-				print "end of separate function"
+				print "Exit <func>"
 				lex()
-			else: error()
-		else: error()
-	else: error()
+			else: print "Syntax error. Expected ')'"
+		else: print "Syntax error. Expected '('"
+	else: print "Syntax error. Expected VAR"
 
 def block1():
 	global charClass
@@ -749,15 +705,12 @@ def block1():
 	global nextToken
 	global lexLen
 	global token
-	print "block w/ declaration\n"
+	print "Enter <block1>"
 	while (nextToken==DEC_INT or nextToken==DEC_FLOAT):
 		declare()
 		print nextToken
-	#if (nextToken==EOL):
-	#	lex()
-	#	print nextToken	
 	block()
-	# else: error()
+	print "Exit <block1>"
 
 def declare():
 	global charClass
@@ -766,12 +719,11 @@ def declare():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "declaration\n"
+	print "Enter <declare>\n"
 
 	if (nextToken==DEC_INT):
 		lex()
@@ -787,11 +739,11 @@ def declare():
 				if (nextToken==ADD_OP or nextToken==SUB_OP or nextToken==INT_LIT):
 					constant()
 					g.write("\n")
-				else: error()
+				else: print "Syntax error. Expected INT"
 			elif (nextToken==EOL):
 				lex()
-			else: error()
-		else: error()
+			else: print "Syntax error. Expected '=' or 'EOL'"
+		else: print "Syntax error. Expected VAR"
 	elif (nextToken==DEC_FLOAT):
 		lex()
 		if (nextToken==VAR):
@@ -813,15 +765,16 @@ def declare():
 							g.write("\n")
 							lex()
 							if (nextToken==EOL): lex()
-							else: error()
-						else: error()
-					else: error()
-				else: error()
+							else: print "Syntax error. Expected 'EOL'"
+						else: print "Syntax error. Expected FLOAT"
+					else: print "Syntax error. Expected '.'"
+				else: print "Syntax error. Expected FLOAT"
 			elif (nextToken==EOL):
 				lex()
-			else: error()
-		else: error()
-	else: error()
+			else: print "Syntax error. Expected '=' or 'EOL'"
+		else: print "Syntax error. Expected VAR"
+	else: print "Syntax error. Expected @int or @float"
+	print "Exit <declare>"
 
 
 def constant():
@@ -831,20 +784,20 @@ def constant():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "constant\n"
+	print "Enter <constant>"
 	if (nextToken==ADD_OP or nextToken==SUB_OP):
 		g.write(' '.join(map(str, lexeme)).replace(" ", ""))
 		lex()
-	if (nextToken==INT_LIT):
+	elif (nextToken==INT_LIT):
 		g.write(' '.join(map(str, lexeme)).replace(" ", ""))
 		lex()
 		if (nextToken==EOL):
 			lex()
+	else: print "Syntax error. Expected INT or FLOAT"
 
 def param():
 	global charClass
@@ -853,7 +806,6 @@ def param():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
@@ -861,7 +813,7 @@ def param():
 	print "parameter\n"
 	if (nextToken==VAR or nextToken==INT_LIT):
 		g.write(' '.join(map(str, lexeme)).replace(" ", ""))
-		lex() # COMMA OR )
+		lex()
 		param1()
 
 def param1():
@@ -871,7 +823,6 @@ def param1():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
@@ -879,7 +830,7 @@ def param1():
 	print "parameter 1\n"
 	if (nextToken==COMMA):
 		g.write(", ")
-		lex() # VAR/INT
+		lex()
 		param()
 
 def block():
@@ -889,12 +840,11 @@ def block():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "block\n"
+	print "Enter <block>"
 	print nextToken
 
 	while(nextToken==EOL):
@@ -913,12 +863,11 @@ def function():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "function\n"
+	print "Enter <function>\n"
 	print nextToken
 	if (nextToken==VAR):
 		A()
@@ -935,7 +884,7 @@ def function():
 	elif (nextToken==COMMENT):
 		lex()
 		comment_out()
-	else: error()
+	else: print "Syntax error. Expected VAR or FUNCTION"
 
 def print_out():
 	global charClass
@@ -944,12 +893,11 @@ def print_out():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "print function\n"
+	print "Enter <print>"
 	lex()
 	print nextToken	
 	if (nextToken==QUOTE):
@@ -965,9 +913,9 @@ def print_out():
 			if (nextToken==EOL):
 				lex()
 			else: error()
-		else: error()
-	else: error()
-	print "end of print"
+		else: print "Syntax error. Expected #end"
+	else: print 'Syntax error. Expected ""'
+	print "Exit <print>"
 
 def read_in():
 	global charClass
@@ -976,12 +924,11 @@ def read_in():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
 	global str3
-	print "read function\n"
+	print "Enter <read>"
 	lex()
 	if (nextToken==VAR):
 		for num in range(0,tabs):
@@ -994,9 +941,9 @@ def read_in():
 			lex()
 			if (nextToken==EOL):
 				lex()
-			else: error()
-		else: error()
-	else: error()
+			else: print "Syntax error. Expected 'EOL'"
+		else: print "Syntax error. Expected #end"
+	else: print "Syntax error. Expected VAR"
 
 def strexpr():
 	global charClass
@@ -1005,7 +952,6 @@ def strexpr():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
@@ -1040,7 +986,6 @@ def comment_out():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
@@ -1070,7 +1015,6 @@ def call_function():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
@@ -1107,7 +1051,6 @@ def if_cont():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
@@ -1162,7 +1105,6 @@ def elif_cont():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
@@ -1209,7 +1151,6 @@ def else_cont():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
@@ -1234,7 +1175,6 @@ def for_cont():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
@@ -1335,7 +1275,6 @@ def cond():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
@@ -1363,7 +1302,6 @@ def error():
 	global nextToken
 	global lexLen
 	global token
-	global a
 	global b
 	global c
 	global lexeme
