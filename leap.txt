@@ -1,0 +1,19 @@
+#startprogram
+@int year
+@int minyear
+@int maxyear
+#print "Enter the lowest year " #end
+#read minyear #end
+#print "Enter the highest year " #end
+#read maxyear #end
+#print "Leap years in given range are " #end
+#for (year = minyear; year <= maxyear; year++)
+#if (year%4 == 0)
+#if (year%100 != 0)
+#print "#{year}" #end
+#elif (year == 0)
+#print "#{year}" #end
+#end
+#end
+#end
+#endprogram
