@@ -423,7 +423,7 @@ def lex():
 			lexeme.append("EOL")
 			break
 
-		print nextToken
+		#print nextToken
 		break
 	#if (nextToken==EOL):
 	#    a = -1
@@ -449,7 +449,7 @@ def A():
 		lex()
 	if (nextToken==ASSIGN_OP):
 		while (nextToken!=EOL and nextToken!=EOF):
-			print nextToken
+			#print nextToken
 			#if (nextToken==EOL or nextToken==EOF):
 			#    error()
 			#    b=1
@@ -541,7 +541,7 @@ def program():
 		lex()
 	if (nextToken==EOL):
 		while (nextToken!=END_PROG):
-			print nextToken
+			#print nextToken
 			if (nextToken==EOF):
 				error()
 				b=1
@@ -558,6 +558,7 @@ def program():
 		b=0
 	else:
 		error()
+	print "end program"
 
 def outsideprog():
 	global charClass
@@ -573,9 +574,9 @@ def outsideprog():
 	while (nextToken==SEP_FUNC):
 		lex()
 		func()
-	if (nextToken==EOL):
+	if (nextToken==EOL or nextToken==EOF): #edit
 		while (nextToken!=EOF):
-			print nextToken
+			#print nextToken
 			# if (nextToken==EOF):
 			#   error()
 			#   b=1
@@ -625,10 +626,11 @@ def block1():
 	print "block w/ declaration\n"
 	while (nextToken==DEC_INT or nextToken==DEC_FLOAT):
 		declare()
-
-	if (nextToken==EOL):
-		lex()
-		block()
+		print nextToken
+	#if (nextToken==EOL):
+	#	lex()
+	#	print nextToken	
+	block()
 	# else: error()
 
 def declare():
@@ -738,12 +740,13 @@ def block():
 	global c
 	global lexeme
 	print "block\n"
+	print nextToken
 	if (nextToken==VAR or nextToken==PRINT_OUTPUT or nextToken==READ_INPUT or nextToken==FOR_COND or nextToken==IF_COND or nextToken==CALL_FUNC or nextToken==COMMENT):
-		# lex()
+		#lex()
 		function()
-		if (nextToken==EOL):
-			lex()
-			block()
+		#if (nextToken==EOL):
+		#	lex()
+		block()
 
 def function():
 	global charClass
@@ -756,6 +759,7 @@ def function():
 	global c
 	global lexeme
 	print "function\n"
+	print nextToken
 	if (nextToken==VAR):
 		A()
 	elif (nextToken==PRINT_OUTPUT):
@@ -784,11 +788,14 @@ def print_out():
 	global lexeme
 	print "print function\n"
 	lex()
+	print nextToken	
 	if (nextToken==QUOTE):
-		lex()
-		while(nextToken!=QUOTE):
-			lex()
-			strexpr()
+		#lex()
+		print nextToken
+		strexpr()
+		#while(nextToken!=QUOTE):
+		#	print nextToken
+		#	lex()
 		lex() # end
 		if (nextToken==END_DELIM):
 			lex()
@@ -797,6 +804,7 @@ def print_out():
 			else: error()
 		else: error()
 	else: error()
+	print "end of print"
 
 def read_in():
 	global charClass
@@ -831,10 +839,13 @@ def strexpr():
 	global c
 	global lexeme
 	print "strexpr\n"
-	if (nextToken==VAR):
-		lex()
-		comment_out()
-	elif (nextToken==LEFT_BRACKET):
+	print nextToken
+
+	lex()
+	#if (nextToken==LEFT_BRACKET):
+	#	#lex()
+	#	comment_out()
+	if (nextToken==LEFT_BRACKET):
 		lex()
 		if (nextToken==VAR):
 			lex()
@@ -842,7 +853,10 @@ def strexpr():
 				lex()
 			else: error()
 		else: error()
+	else:
+		comment_out()
 	# else: error()
+	print "end of strexpr"
 
 
 def comment_out():
@@ -867,7 +881,7 @@ def comment_out():
 				lex()
 				break
 			else: error()
-
+	print "end of comment"
 def call_function():
 	global charClass
 	global nextChar
@@ -913,25 +927,22 @@ def if_cont():
 	lex()
 	if (nextToken==LEFT_PAREN):
 		lex()
-		if (nextToken==VAR):
+		cond()
+		if (nextToken==RIGHT_PAREN):
 			lex()
-			cond()
-			if (nextToken==RIGHT_PAREN):
+			if (nextToken==EOL):
 				lex()
-				if (nextToken==EOL):
+				block()
+				if (nextToken==ELIF_COND):
+					elif_cont()
+				if (nextToken==ELSE_COND):
+					else_cont()
+				if (nextToken==END_DELIM):
 					lex()
-					block()
-					if (nextToken==ELIF_COND):
-						elif_cont()
-					if (nextToken==ELSE_COND):
-						else_cont()
-					if (nextToken==END_DELIM):
+					if (nextToken==EOL):
 						lex()
-						if (nextToken==EOL):
-							lex()
-						else: error()
-					# else: error()
-				else: error()
+					else: error()
+				# else: error()
 			else: error()
 		else: error()
 	else: error()
@@ -951,17 +962,14 @@ def elif_cont():
 	lex()
 	if (nextToken==LEFT_PAREN):
 		lex()
-		if (nextToken==VAR):
+		cond()
+		if (nextToken==RIGHT_PAREN):
 			lex()
-			cond()
-			if (nextToken==RIGHT_PAREN):
+			if (nextToken==EOL):
 				lex()
-				if (nextToken==EOL):
-					lex()
-					block()
-					if (nextToken==ELIF_COND):
-						elif_cont()
-				else: error()
+				block()
+				if (nextToken==ELIF_COND):
+					elif_cont()
 			else: error()
 		else: error()
 	else: error()
@@ -1014,16 +1022,19 @@ def for_cont():
 								lex()
 								if (nextToken==ITER_PLUS or nextToken==ITER_MINUS):
 									lex()
-									if (nextToken==EOL):
-										lex()
-										block()
-										if (nextToken==END_DELIM):
-											lex()
-											if (nextToken==EOL):
-												lex()
-											else: error()
-										else: error()
-									else: error()
+                                                                        if (nextToken==RIGHT_PAREN):
+                                                                            lex()
+									    if (nextToken==EOL):
+									    	lex()
+									    	block()
+									    	if (nextToken==END_DELIM):
+									    		lex()
+									    		if (nextToken==EOL):
+									    			lex()
+									    		else: error()
+									    	else: error()
+									    else: error()
+                                                                        else: error()
 								else: error()
 							else: error()
 						else: error()
