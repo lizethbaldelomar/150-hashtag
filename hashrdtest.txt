@@ -1,5 +1,10 @@
 #startprogram
 @int i
+#call factorial() #end
+#endprogram
+
+#function factorial()
+@int i
 @int factorial = 1
 @int input
 #read input #end
@@ -10,9 +15,10 @@
 #else
 #for (i = 1; i <= input; i++)
 factorial = factorial * i
+#end
+#end
 #print "The factorial of " #end
 #print "#{input}" #end
 #print "is " #end
 #print "#{factorial}" #end
 #end
-#endprogram
