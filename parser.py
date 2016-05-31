@@ -70,6 +70,7 @@ def getChar():
 		global charClass
 		global g
 		global f
+		global line
 		global tabs
 		global nextChar
 		global nextToken
@@ -114,6 +115,7 @@ def addChar():
 	global charClass
 	global g
 	global f
+	global line
 	global tabs
 	global nextChar
 	global nextToken
@@ -131,6 +133,7 @@ def lookup(ch):
 	global charClass
 	global g
 	global f
+	global line
 	global tabs
 	global nextChar
 	global nextToken
@@ -208,6 +211,7 @@ def lookup(ch):
 
 		if case('\n'):
 			addChar()
+			line = line+1
 			nextToken = EOL
 			lexeme = []
 			lexeme.append("EOL")
@@ -225,6 +229,7 @@ def getNoneBlank():
 	global charClass
 	global g
 	global f
+	global line
 	global tabs
 	global nextChar
 	global nextToken
@@ -241,6 +246,7 @@ def lex():
 	global charClass
 	global g
 	global f
+	global line
 	global tabs
 	global nextChar
 	global nextToken
@@ -439,6 +445,7 @@ def A():
 	global charClass
 	global g
 	global f
+	global line
 	global tabs
 	global nextChar
 	global nextToken
@@ -477,6 +484,7 @@ def expr():
 	global token
 	global a
 	global b
+	global line
 	global c
 	global lexeme
 	global str3
@@ -501,6 +509,7 @@ def term():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -523,6 +532,7 @@ def factor():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -561,6 +571,7 @@ def expr2():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -582,6 +593,7 @@ def term2():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -603,6 +615,7 @@ def factor2():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -636,6 +649,7 @@ def program():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -680,6 +694,7 @@ def outsideprog():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -707,6 +722,7 @@ def func():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -751,6 +767,7 @@ def block1():
 	global nextToken
 	global lexLen
 	global token
+	global line
 	global fprint
 	while (nextToken==DEC_INT or nextToken==DEC_FLOAT):
 		declare()
@@ -760,6 +777,7 @@ def declare():
 	global charClass
 	global g
 	global f
+	global line
 	global tabs
 	global nextChar
 	global nextToken
@@ -863,6 +881,7 @@ def constant():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -887,6 +906,7 @@ def param():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -907,6 +927,7 @@ def param1():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -927,6 +948,7 @@ def block():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -948,6 +970,7 @@ def function():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -975,6 +998,7 @@ def print_out():
 	global charClass
 	global g
 	global f
+	global line
 	global tabs
 	global nextChar
 	global nextToken
@@ -1011,6 +1035,7 @@ def read_in():
 	global charClass
 	global g
 	global f
+	global line
 	global tabs
 	global nextChar
 	global nextToken
@@ -1054,6 +1079,7 @@ def strexpr():
 	global charClass
 	global g
 	global f
+	global line
 	global tabs
 	global nextChar
 	global nextToken
@@ -1091,6 +1117,7 @@ def comment_out():
 	global charClass
 	global g
 	global f
+	global line
 	global tabs
 	global nextChar
 	global nextToken
@@ -1124,6 +1151,7 @@ def call_function():
 	global charClass
 	global g
 	global f
+	global line
 	global tabs
 	global nextChar
 	global nextToken
@@ -1186,6 +1214,7 @@ def if_cont():
 	global a
 	global b
 	global c
+	global line
 	global lexeme
 	global str3
 	global fprint
@@ -1262,6 +1291,7 @@ def elif_cont():
 	global c
 	global lexeme
 	global str3
+	global line
 	global fprint
 	tabs = tabs - 1
 	for num in range(0,tabs):
@@ -1327,6 +1357,7 @@ def else_cont():
 	global c
 	global lexeme
 	global str3
+	global line
 	global fprint
 	tabs = tabs - 1
 	for num in range(0,tabs):
@@ -1358,6 +1389,7 @@ def for_cont():
 	global lexeme
 	global str3
 	global fprint
+	global line
 	for num in range(0,tabs):
 		g.write("\t")
 	tabs = tabs + 1
@@ -1496,6 +1528,7 @@ def cond():
 	global lexeme
 	global str3
 	global fprint
+	global line
 
 	if (nextToken==VAR):
 		g.write(' '.join(map(str, lexeme)).replace(" ", ""))
@@ -1520,9 +1553,14 @@ def cond():
 		error()
 
 def deletecontent(pfile):
+	global line
 	pfile.seek(0)
 	pfile.truncate()
 	pfile.write("import sys\nimport time\nimport tkSimpleDialog\nsys.stdout=open('output.txt', 'w')\n\n")
+	pfile.write("line = %i" % line)
+	pfile.write("\n\n")
+	pfile.write("print 'line# : '+str(line)")
+	pfile.write("\n\n")
 
 def error():
 	global charClass
@@ -1539,6 +1577,7 @@ def error():
 	global lexeme
 	global str3
 	global fprint
+	global line
 	fprint = 1
 	if (nextToken!=EOL and nextToken!=EOF):
 		while (nextToken!=EOF):
@@ -1546,8 +1585,9 @@ def error():
 			if (nextChar == EOF):
 				nextToken = EOF
 				break
+
 def start(filename):
-	
+	global line
 	global f
 	global g
 	global nextChar
@@ -1569,6 +1609,7 @@ def start(filename):
 	a = 0
 	b = 0
 	c = 0
+	line = 0 
 	lexeme = []
 	str3 = []
 	charClass = "UNKNOWN"
