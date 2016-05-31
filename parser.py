@@ -1559,7 +1559,7 @@ def deletecontent(pfile):
 	pfile.write("import sys\nimport time\nimport tkSimpleDialog\nsys.stdout=open('output.txt', 'w')\n\n")
 	pfile.write("line = %i" % line)
 	pfile.write("\n\n")
-	pfile.write("print 'line# : '+str(line)")
+	pfile.write("print 'line '+str(line)")
 	pfile.write("\n\n")
 
 def error():
