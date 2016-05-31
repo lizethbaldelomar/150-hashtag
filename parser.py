@@ -469,7 +469,7 @@ def A():
 			expr2()
 	else:
 		deletecontent(g)
-		g.write("print 'Syntax error. Expected '=''")
+		g.write("print 'Syntax error. Expected ='")
 		error()
 	g.write("\n")
 
@@ -552,11 +552,11 @@ def factor():
 				lex()
 			else:
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected ')''")
+				g.write("print 'Syntax error. Expected )'")
 				error()
 		else:
 			deletecontent(g)
-			g.write("print 'Syntax error. Expected VAR, INT, or '(''")
+			g.write("print 'Syntax error. Expected VAR, INT, or ('")
 			error()
 
 def expr2():
@@ -630,11 +630,11 @@ def factor2():
 				lex()
 			else:
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected ')''")
+				g.write("print 'Syntax error. Expected )'")
 				error()
 		else:
 			deletecontent(g)
-			g.write("print 'Syntax error. Expected VAR, INT, or '(''")
+			g.write("print 'Syntax error. Expected VAR, INT, or ('")
 			error()
 			
 def program():
@@ -661,7 +661,7 @@ def program():
 		while (nextToken!=END_PROG):
 			if (nextToken==EOF):
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected '#endprogram''")
+				g.write("print 'Syntax error. Expected #endprogram'")
 				error()
 				b=1
 				break
@@ -675,7 +675,7 @@ def program():
 		b=0
 	else:
 		deletecontent(g)
-		g.write("print 'Syntax error. Expected 'EOL''")
+		g.write("print 'Syntax error. Expected EOL'")
 		error()
 	for num in range(0,tabs):
 		g.write("\t")
@@ -707,7 +707,7 @@ def outsideprog():
 			outsideprog()
 	else:
 		deletecontent(g)
-		g.write("print 'Syntax error. Expected 'EOL' or 'EOF''")
+		g.write("print 'Syntax error. Expected EOL or EOF'")
 		error()
 
 def func():
@@ -747,11 +747,11 @@ def func():
 				lex()
 			else: 
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected ')''")
+				g.write("print 'Syntax error. Expected )'")
 				error()
 		else:
 			deletecontent(g) 
-			g.write("print 'Syntax error. Expected '(''")
+			g.write("print 'Syntax error. Expected ('")
 			error()
 	else: 
 		deletecontent(g)
@@ -811,7 +811,7 @@ def declare():
 				lex()
 			else: 
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected '=' or 'EOL''")
+				g.write("print 'Syntax error. Expected = or EOL'")
 				error()
 		else: 
 			deletecontent(g)
@@ -840,7 +840,7 @@ def declare():
 							if (nextToken==EOL): lex()
 							else:
 								deletecontent(g) 
-								g.write("print 'Syntax error. Expected 'EOL''")
+								g.write("print 'Syntax error. Expected EOL'")
 								error()
 						else: 
 							deletecontent(g)
@@ -848,7 +848,7 @@ def declare():
 							error()
 					else: 
 						deletecontent(g)
-						g.write("print 'Syntax error. Expected '.''")
+						g.write("print 'Syntax error. Expected .'")
 						error()
 				else: 
 					deletecontent(g)
@@ -858,7 +858,7 @@ def declare():
 				lex()
 			else: 
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected '=' or 'EOL''")
+				g.write("print 'Syntax error. Expected = or EOL'")
 				error()
 		else: 
 			deletecontent(g)
@@ -1020,11 +1020,11 @@ def print_out():
 				lex()
 			else:
 				deletecontent(g) 
-				g.write("print 'Syntax error. Expected 'EOL''")
+				g.write("print 'Syntax error. Expected EOL'")
 				error()
 		else: 
 			deletecontent(g)
-			g.write("print 'Syntax error. Expected '#end''")
+			g.write("print 'Syntax error. Expected #end'")
 			error()
 	else: 
 		deletecontent(g)
@@ -1064,11 +1064,11 @@ def read_in():
 				lex()
 			else: 
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected 'EOL''")
+				g.write("print 'Syntax error. Expected EOL'")
 				error()
 		else: 
 			deletecontent(g)
-			g.write("print 'Syntax error. Expected '#end''")
+			g.write("print 'Syntax error. Expected #end'")
 			error()
 	else: 
 		deletecontent(g)
@@ -1103,7 +1103,7 @@ def strexpr():
 				lex()
 			else:
 				deletecontent(g) 
-				g.write("print 'Syntax error. Expected '}''")
+				g.write("print 'Syntax error. Expected }'")
 				error()
 		else: 
 			deletecontent(g)
@@ -1141,7 +1141,7 @@ def comment_out():
 				lex()
 			else: 
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected 'EOL''")
+				g.write("print 'Syntax error. Expected EOL'")
 				error()
 			break
 	g.write('"')
@@ -1183,19 +1183,19 @@ def call_function():
 						lex()
 					else:
 						deletecontent(g) 
-						g.write("print 'Syntax error. Expected 'EOL''")
+						g.write("print 'Syntax error. Expected EOL'")
 						error()
 				else: 
 					deletecontent(g)
-					g.write("print 'Syntax error. Expected '#end''")
+					g.write("print 'Syntax error. Expected #end'")
 					error()
 			else:
 				deletecontent(g) 
-				g.write("print 'Syntax error. Expected ')''")
+				g.write("print 'Syntax error. Expected )'")
 				error()
 		else: 
 			deletecontent(g)
-			g.write("print 'Syntax error. Expected '(''")
+			g.write("print 'Syntax error. Expected ('")
 			error()
 	else: 
 		deletecontent(g)
@@ -1240,7 +1240,7 @@ def if_cont():
 					error()
 			else: 
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected '==' , '!=' , '>' , '<' , '>=' or '<=' '")
+				g.write("print 'Syntax error. Expected == , != , > , < , >= or <= '")
 				error()
 		else: 
 			deletecontent(g)
@@ -1262,19 +1262,19 @@ def if_cont():
 						lex()
 					else:
 						deletecontent(g) 
-						g.write("print 'Syntax error. Expected 'EOL''")
+						g.write("print 'Syntax error. Expected EOL'")
 						error()
 			else: 
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected 'EOL''")
+				g.write("print 'Syntax error. Expected EOL'")
 				error()
 		else: 
 			deletecontent(g)
-			g.write("print 'Syntax error. Expected ')''")
+			g.write("print 'Syntax error. Expected )'")
 			error()
 	else: 
 		deletecontent(g)
-		g.write("print 'Syntax error. Expected '(''")
+		g.write("print 'Syntax error. Expected ('")
 		error()
 
 def elif_cont():
@@ -1317,7 +1317,7 @@ def elif_cont():
 					error()
 			else: 
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected '==' , '!=' , '>' , '<' , '>=' , or '<=''")
+				g.write("print 'Syntax error. Expected == , != , > , < , >= , or <='")
 				error()
 		else: 
 			deletecontent(g)
@@ -1332,15 +1332,15 @@ def elif_cont():
 					elif_cont()
 			else: 
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected 'EOL''")
+				g.write("print 'Syntax error. Expected EOL'")
 				error()
 		else: 
 			deletecontent(g)
-			g.write("print 'Syntax error. Expected ')''")
+			g.write("print 'Syntax error. Expected )'")
 			error()
 	else: 
 		deletecontent(g)
-		g.write("print 'Syntax error. Expected '(''")
+		g.write("print 'Syntax error. Expected ('")
 		error()
 
 def else_cont():
@@ -1371,7 +1371,7 @@ def else_cont():
 		block()
 	else: 
 		deletecontent(g)
-		g.write("print 'Syntax error. Expected 'EOL''")
+		g.write("print 'Syntax error. Expected EOL'")
 		error()
 
 def for_cont():
@@ -1423,7 +1423,7 @@ def for_cont():
 									error()
 							else: 
 								deletecontent(g)
-								g.write("print 'Syntax error. Expected '==' , '!=' , '>' , '<' , '>=' or '<=''")
+								g.write("print 'Syntax error. Expected == , != , > , < , >= or <='")
 								error()
 						else: 
 							deletecontent(g)
@@ -1466,23 +1466,23 @@ def for_cont():
 									    			lex()
 									    		else: 
 									    			deletecontent(g)
-								    				g.write("print 'Syntax error. Expected 'EOL''")
+								    				g.write("print 'Syntax error. Expected EOL'")
 									    			error()
 									    	else: 
 									    		deletecontent(g)
-									    		g.write("print 'Syntax error. Expected '#end''")
+									    		g.write("print 'Syntax error. Expected #end'")
 									    		error()
 									    else: 
 									    	deletecontent(g)
-									    	g.write("print 'Syntax error. Expected 'EOL''")
+									    	g.write("print 'Syntax error. Expected EOL'")
 									    	error()
                                                                         else: 
                                                                         	deletecontent(g)
-                             	                                          	g.write("print 'Syntax error. Expected ')''")
+                             	                                          	g.write("print 'Syntax error. Expected )'")
                                                                         	error()
 								else: 
 									deletecontent(g)
-									g.write("print 'Syntax error. Expected '++' or '--''")
+									g.write("print 'Syntax error. Expected ++ or --'")
 									error()
 							else: 
 								deletecontent(g)
@@ -1490,11 +1490,11 @@ def for_cont():
 								error()
 						else: 
 							deletecontent(g)
-							g.write("print 'Syntax error. Expected ';''")
+							g.write("print 'Syntax error. Expected ;'")
 							error()
 					else: 
 						deletecontent(g)
-						g.write("print 'Syntax error. Expected ';''")
+						g.write("print 'Syntax error. Expected ;'")
 						error()
 				else: 
 					deletecontent(g)
@@ -1502,7 +1502,7 @@ def for_cont():
 					error()
 			else: 
 				deletecontent(g)
-				g.write("print 'Syntax error. Expected '=''")
+				g.write("print 'Syntax error. Expected ='")
 				error()
 		else: 
 			deletecontent(g)
@@ -1510,7 +1510,7 @@ def for_cont():
 			error()
 	else: 
 		deletecontent(g)
-		g.write("print 'Syntax error. Expected '(''")
+		g.write("print 'Syntax error. Expected ('")
 		error()
 
 def cond():
@@ -1545,7 +1545,7 @@ def cond():
 				error()
 		else: 
 			deletecontent(g)
-			g.write("print 'Syntax error. Expected '==' , '!=' , '>' , '<' , '>=' or '<=''")
+			g.write("print 'Syntax error. Expected == , != , > , < , >= or <='")
 			error()
 	else: 
 		deletecontent(g)
@@ -1554,8 +1554,11 @@ def cond():
 
 def deletecontent(pfile):
 	global line
+	global nextToken
 	pfile.seek(0)
 	pfile.truncate()
+	if (nextToken != EOL):
+		line = line+1
 	pfile.write("import sys\nimport time\nimport tkSimpleDialog\nsys.stdout=open('output.txt', 'w')\n\n")
 	pfile.write("line = %i" % line)
 	pfile.write("\n\n")
